@@ -17,11 +17,16 @@
 package com.android.talkback.tutorial;
 
 import android.content.Context;
+
 import com.android.utils.JsonUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * 教程
+ */
 public class Tutorial {
 
     private static final String JSON_KEY_LESSONS = "lessons";

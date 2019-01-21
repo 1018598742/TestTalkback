@@ -30,6 +30,7 @@ import com.android.talkback.InputModeManager;
 import com.android.talkback.R;
 import com.android.talkback.SpeechController;
 import com.android.utils.Const;
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 
 import com.android.talkback.eventprocessor.EventState;
@@ -289,7 +290,7 @@ public class FullScreenReadControllerApp implements
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.i(TAG, "FullScreenReadControllerApp-onAccessibilityEvent: ");
+        XLog.itest("FullScreenReadControllerApp-onAccessibilityEvent: ");
         if (!isActive()) {
             return;
         }

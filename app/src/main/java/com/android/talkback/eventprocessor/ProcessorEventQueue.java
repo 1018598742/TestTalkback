@@ -30,9 +30,11 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+
 import com.android.talkback.R;
 import com.android.talkback.SpeechCleanupUtils;
 import com.android.talkback.SpeechController;
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 import com.android.talkback.Utterance;
 import com.android.talkback.formatter.EventSpeechRuleProcessor;
@@ -48,7 +50,9 @@ import com.android.utils.WeakReferenceHandler;
  * feedback.
  */
 public class ProcessorEventQueue implements AccessibilityEventListener {
-    /** Manages pending speech events. */
+    /**
+     * Manages pending speech events.
+     */
     private final ProcessorEventHandler mHandler = new ProcessorEventHandler(this);
 
     /**
@@ -67,16 +71,24 @@ public class ProcessorEventQueue implements AccessibilityEventListener {
      */
     private EventSpeechRuleProcessor mEventSpeechRuleProcessor;
 
-    /** TalkBack-specific listener used for testing. */
+    /**
+     * TalkBack-specific listener used for testing.
+     */
     private TalkBackListener mTestingListener;
 
-    /** Event type for the most recently processed event. */
+    /**
+     * Event type for the most recently processed event.
+     */
     private int mLastEventType;
 
-    /** Event time for the most recent window state changed event. */
+    /**
+     * Event time for the most recent window state changed event.
+     */
     private long mLastWindowStateChanged = 0;
 
-    /** Context for accessing resources. */
+    /**
+     * Context for accessing resources.
+     */
     private Context mContext;
 
     public ProcessorEventQueue(SpeechController speechController, TalkBackService context) {
@@ -95,6 +107,7 @@ public class ProcessorEventQueue implements AccessibilityEventListener {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        XLog.itest("ProcessorEventQueue-onAccessibilityEvent: ");
         final int eventType = event.getEventType();
 
         if (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
@@ -137,7 +150,7 @@ public class ProcessorEventQueue implements AccessibilityEventListener {
     private void processAndRecycleEvent(AccessibilityEvent event) {
         if (event == null) return;
         LogUtils.log(this, Log.DEBUG, "Processing event: %s", event);
-
+        XLog.itest("ProcessorEventQueue-processAndRecycleEvent: 回收已经处理的事件" + String.format("Processing event: %s", event));
         final Utterance utterance = new Utterance();
 
         if (mEventSpeechRuleProcessor.processEvent(event, utterance)) {
@@ -196,11 +209,11 @@ public class ProcessorEventQueue implements AccessibilityEventListener {
      *
      * @param utterance to compute queuing from
      * @return A queuing mode, one of:
-     *         <ul>
-     *         <li>{@link SpeechController#QUEUE_MODE_INTERRUPT}
-     *         <li>{@link SpeechController#QUEUE_MODE_QUEUE}
-     *         <li>{@link SpeechController#QUEUE_MODE_UNINTERRUPTIBLE}
-     *         </ul>
+     * <ul>
+     * <li>{@link SpeechController#QUEUE_MODE_INTERRUPT}
+     * <li>{@link SpeechController#QUEUE_MODE_QUEUE}
+     * <li>{@link SpeechController#QUEUE_MODE_UNINTERRUPTIBLE}
+     * </ul>
      */
     private int computeQueuingMode(Utterance utterance, AccessibilityEvent event) {
         final Bundle metadata = utterance.getMetadata();
@@ -209,11 +222,11 @@ public class ProcessorEventQueue implements AccessibilityEventListener {
         // Queue events that occur automatically after window state changes.
         if (((event.getEventType() & AccessibilityEventProcessor.AUTOMATIC_AFTER_STATE_CHANGE) != 0)
                 && ((event.getEventTime() - mLastWindowStateChanged)
-                        < AccessibilityEventProcessor.DELAY_AUTO_AFTER_STATE)) {
+                < AccessibilityEventProcessor.DELAY_AUTO_AFTER_STATE)) {
             return SpeechController.QUEUE_MODE_QUEUE;
         }
 
-        if(eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
+        if (eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
             AccessibilityRecordCompat record = AccessibilityEventCompat.asRecord(event);
             AccessibilityNodeInfoCompat node = record.getSource();
             if (node != null) {
@@ -239,7 +252,9 @@ public class ProcessorEventQueue implements AccessibilityEventListener {
     }
 
     private static class ProcessorEventHandler extends WeakReferenceHandler<ProcessorEventQueue> {
-        /** Speak action. */
+        /**
+         * Speak action.
+         */
         private static final int WHAT_SPEAK = 1;
 
         public ProcessorEventHandler(ProcessorEventQueue parent) {

@@ -20,10 +20,12 @@ import android.support.v4.view.accessibility.AccessibilityEventCompat;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v4.view.accessibility.AccessibilityRecordCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import com.android.talkback.FeedbackItem;
 import com.android.talkback.SpeechController;
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 import com.android.talkback.Utterance;
 import com.android.talkback.speechrules.NodeSpeechRuleProcessor;
@@ -83,7 +85,7 @@ public final class LiveViewFormatter implements EventSpeechRule.AccessibilityEve
 
         CharSequence text = NodeSpeechRuleProcessor.getInstance()
                 .getDescriptionForTree(node, event, node);
-
+        XLog.itest("LiveViewFormatter-format: 最佳描述："+text);
         if (TextUtils.isEmpty(text)) {
             return false;
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="talkback_service_description" msgid="5081383053733275450">"启用 TalkBack 服务后，您的设备可为盲人和视力不好的用户提供语音反馈。例如，设备会读出您所触摸、选择和激活的内容。\n\n如果您不小心启用了 TalkBack，并想要关闭这项功能，只需点按开关，直到该开关外围显示为绿色，然后再点按两次开关即可。请针对系统随即显示的确认对话框执行相同的操作。"</string>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="talkback_service_description" msgid="5081383053733275450">"123"</string>
+    <!--<string name="talkback_service_description" msgid="5081383053733275450">"启用 TalkBack 服务后，您的设备可为盲人和视力不好的用户提供语音反馈。例如，设备会读出您所触摸、选择和激活的内容。\n\n如果您不小心启用了 TalkBack，并想要关闭这项功能，只需点按开关，直到该开关外围显示为绿色，然后再点按两次开关即可。请针对系统随即显示的确认对话框执行相同的操作。"</string>-->
     <string name="talkback_on" msgid="315529674405160699">"TalkBack 已开启"</string>
     <string name="talkback_suspended" msgid="183421830476125877">"TalkBack 服务已暂停"</string>
     <string name="talkback_resumed" msgid="3229591037647690759">"TalkBack 服务已恢复"</string>
@@ -59,8 +59,8 @@
     <string name="template_percent" msgid="6118803183030408820">"百分之 <xliff:g id="PERCENTAGE">%1$s</xliff:g>。"</string>
     <string name="template_charging" msgid="2038200557537960378">"充电<xliff:g id="CHANGING_STATUS">%1$s</xliff:g>，电池电量为百分之 <xliff:g id="BATTERY_LEVEL">%2$s</xliff:g>。"</string>
     <plurals name="template_containers" formatted="false" msgid="9179529663500973282">
-      <item quantity="other"><xliff:g id="TYPE_2">%1$s</xliff:g>，包含 <xliff:g id="COUNT_3">%2$d</xliff:g> 项内容。</item>
-      <item quantity="one"><xliff:g id="TYPE_0">%1$s</xliff:g>，包含 <xliff:g id="COUNT_1">%2$d</xliff:g> 项内容。</item>
+        <item quantity="other"><xliff:g id="TYPE_2">%1$s</xliff:g>，包含 <xliff:g id="COUNT_3">%2$d</xliff:g> 项内容。</item>
+        <item quantity="one"><xliff:g id="TYPE_0">%1$s</xliff:g>，包含 <xliff:g id="COUNT_1">%2$d</xliff:g> 项内容。</item>
     </plurals>
     <string name="value_gridview" msgid="1382219539169157957">"网格"</string>
     <string name="value_listview" msgid="7625152822709234439">"列表"</string>
@@ -452,8 +452,8 @@
     <string name="label_export_failed" msgid="4500274103149146929">"无法导出标签"</string>
     <string name="label_import_failed" msgid="1321882372299892757">"无法导入标签"</string>
     <plurals name="label_import_succeeded" formatted="false" msgid="3709295987864614176">
-      <item quantity="other">已更新 %d 个标签</item>
-      <item quantity="one">已更新 1 个标签</item>
+        <item quantity="other">已更新 %d 个标签</item>
+        <item quantity="one">已更新 1 个标签</item>
     </plurals>
     <string name="label_choose_app_to_export" msgid="3288834802071890267">"选择应用以导出标签："</string>
     <string name="talkback_gesture_change_details" msgid="1242896734553682887">"此版本的 TalkBack 服务对默认的无障碍手势进行了一些更改。您可以在 TalkBack 服务设置中自定义与这些手势关联的操作。启用“触摸浏览”功能后，您可以使用以下手势执行某些操作。\n\n<xliff:g id="MAPPINGS">%1$s</xliff:g>"</string>
@@ -524,24 +524,24 @@
     <string name="template_collection_end" msgid="2167296836815021551">"已退出<xliff:g id="COLLECTION_NAME">%1$s</xliff:g>"</string>
     <string name="template_collection_level" msgid="8386016656549198972">"第 <xliff:g id="LEVEL">%1$s</xliff:g> 级"</string>
     <plurals name="template_list_total_count" formatted="false" msgid="3955737557576761990">
-      <item quantity="other"><xliff:g id="TOTAL_COUNT_1">%1$d</xliff:g> 项</item>
-      <item quantity="one"><xliff:g id="TOTAL_COUNT_0">%1$d</xliff:g> 项</item>
+        <item quantity="other"><xliff:g id="TOTAL_COUNT_1">%1$d</xliff:g> 项</item>
+        <item quantity="one"><xliff:g id="TOTAL_COUNT_0">%1$d</xliff:g> 项</item>
     </plurals>
     <plurals name="template_list_row_count" formatted="false" msgid="3432009359831385828">
-      <item quantity="other"><xliff:g id="ROW_COUNT_1">%1$d</xliff:g> 行</item>
-      <item quantity="one"><xliff:g id="ROW_COUNT_0">%1$d</xliff:g> 行</item>
+        <item quantity="other"><xliff:g id="ROW_COUNT_1">%1$d</xliff:g> 行</item>
+        <item quantity="one"><xliff:g id="ROW_COUNT_0">%1$d</xliff:g> 行</item>
     </plurals>
     <plurals name="template_list_column_count" formatted="false" msgid="5016154931003131594">
-      <item quantity="other"><xliff:g id="COLUMN_COUNT_1">%1$d</xliff:g> 列</item>
-      <item quantity="one"><xliff:g id="COLUMN_COUNT_0">%1$d</xliff:g> 列</item>
+        <item quantity="other"><xliff:g id="COLUMN_COUNT_1">%1$d</xliff:g> 列</item>
+        <item quantity="one"><xliff:g id="COLUMN_COUNT_0">%1$d</xliff:g> 列</item>
     </plurals>
     <plurals name="template_password_character_count" formatted="false" msgid="1628316286149773405">
-      <item quantity="other"><xliff:g id="CHARACTER_COUNT_1">%1$d</xliff:g> 个字符</item>
-      <item quantity="one"><xliff:g id="CHARACTER_COUNT_0">%1$d</xliff:g> 个字符</item>
+        <item quantity="other"><xliff:g id="CHARACTER_COUNT_1">%1$d</xliff:g> 个字符</item>
+        <item quantity="one"><xliff:g id="CHARACTER_COUNT_0">%1$d</xliff:g> 个字符</item>
     </plurals>
     <plurals name="template_dump_event_count" formatted="false" msgid="4038822501642812499">
-      <item quantity="other">已选择 <xliff:g id="TOTAL_COUNT">%1$d</xliff:g> 个事件</item>
-      <item quantity="one">已选择 1 个事件</item>
+        <item quantity="other">已选择 <xliff:g id="TOTAL_COUNT">%1$d</xliff:g> 个事件</item>
+        <item quantity="one">已选择 1 个事件</item>
     </plurals>
     <string name="template_tv_remote_mode_started" msgid="5968574403263650425">"已启动<xliff:g id="REMOTE_MODE">%1$s</xliff:g>"</string>
     <string name="template_tv_remote_mode_ended" msgid="4410160163389481887">"已退出<xliff:g id="REMOTE_MODE">%1$s</xliff:g>"</string>

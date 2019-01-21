@@ -24,7 +24,7 @@ import java.util.IllegalFormatException;
  * Handles logging formatted strings.
  */
 public class LogUtils {
-    private final static String TAG = "LogUtils";
+    private final static String TAG = "My_Test";
 
     /**
      * The minimum log level that will be printed to the console. Set this to

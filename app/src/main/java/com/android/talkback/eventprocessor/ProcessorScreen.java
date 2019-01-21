@@ -26,6 +26,7 @@ import android.support.v4.view.accessibility.AccessibilityRecordCompat;
 import android.support.v4.view.accessibility.AccessibilityWindowInfoCompat;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityWindowInfo;
@@ -39,6 +40,7 @@ import com.android.utils.AccessibilityEventListener;
 import com.android.utils.AccessibilityEventUtils;
 import com.android.utils.StringBuilderUtils;
 import com.android.utils.WindowManager;
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 
 import java.util.ArrayList;
@@ -107,6 +109,7 @@ public class ProcessorScreen implements AccessibilityEventListener {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        XLog.itest( "ProcessorScreen-onAccessibilityEvent: ");
         int eventType = event.getEventType();
         if (eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &&
                 eventType != AccessibilityEvent.TYPE_WINDOWS_CHANGED) {

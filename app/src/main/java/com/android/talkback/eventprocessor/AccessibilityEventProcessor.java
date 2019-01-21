@@ -41,6 +41,7 @@ import com.android.talkback.formatter.ClickFormatter;
 import com.android.utils.Const;
 import com.android.utils.Role;
 import com.android.utils.SharedPreferencesUtils;
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 import com.android.talkback.Utterance;
 import com.android.utils.AccessibilityEventListener;
@@ -58,7 +59,7 @@ public class AccessibilityEventProcessor {
     private static final String LOGTAG = "A11yEventProcessor";
     private static final String DUMP_EVNET_LOG_TAG = "EventDumper";
     private static final String TAG = Const.TAG;
-    private TalkBackListener mTestingListener;
+//    private TalkBackListener mTestingListener;
 
     /**
      * Event types that are allowed to interrupt radial menus.
@@ -181,6 +182,7 @@ public class AccessibilityEventProcessor {
 
     /**
      * Read dump event configuration from preferences.
+     * 从首选项中读取转储事件配置
      */
     private void initDumpEventMask() {
         int[] eventTypes = AccessibilityEventUtils.getAllEventTypes();
@@ -214,11 +216,12 @@ public class AccessibilityEventProcessor {
         mProcessorFocusAndSingleTap = processor;
     }
 
+    // TODO: 2019/1/18 在这处理辅助功能检测的信息
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.i(TAG, "AccessibilityEventProcessor-onAccessibilityEvent: ");
-        if (mTestingListener != null) {
-            mTestingListener.onAccessibilityEvent(event);
-        }
+        XLog.itest("AccessibilityEventProcessor-onAccessibilityEvent: ");
+//        if (mTestingListener != null) {
+//            mTestingListener.onAccessibilityEvent(event);
+//        }
 
         if ((mDumpEventMask & event.getEventType()) != 0) {
             Log.v(DUMP_EVNET_LOG_TAG, event.toString());
@@ -257,9 +260,9 @@ public class AccessibilityEventProcessor {
             processEvent(event);
         }
 
-        if (mTestingListener != null) {
-            mTestingListener.afterAccessibilityEvent(event);
-        }
+//        if (mTestingListener != null) {
+//            mTestingListener.afterAccessibilityEvent(event);
+//        }
     }
 
     /**
@@ -580,17 +583,17 @@ public class AccessibilityEventProcessor {
         });
     }
 
-    public void setTestingListener(TalkBackListener testingListener) {
-        mTestingListener = testingListener;
+//    public void setTestingListener(TalkBackListener testingListener) {
+//        mTestingListener = testingListener;
+//
+//        if (mProcessorEventQueue != null) {
+//            mProcessorEventQueue.setTestingListener(testingListener);
+//        }
+//    }
 
-        if (mProcessorEventQueue != null) {
-            mProcessorEventQueue.setTestingListener(testingListener);
-        }
-    }
-
-    public TalkBackListener getTestingListener() {
-        return mTestingListener;
-    }
+//    public TalkBackListener getTestingListener() {
+//        return mTestingListener;
+//    }
 
     /**
      * Update the dump event mask when relavant preferences are changed.

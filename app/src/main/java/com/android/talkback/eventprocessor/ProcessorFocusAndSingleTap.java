@@ -35,6 +35,7 @@ import com.android.talkback.InputModeManager;
 import com.android.talkback.R;
 import com.android.talkback.SpeechController;
 import com.android.utils.Role;
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 import com.android.talkback.controller.CursorController;
 import com.android.talkback.controller.FeedbackController;
@@ -135,6 +136,7 @@ public class ProcessorFocusAndSingleTap implements AccessibilityEventListener,
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        XLog.itest( "ProcessorFocusAndSingleTap-onAccessibilityEvent: ");
         if (!mAccessibilityManager.isTouchExplorationEnabled()) {
             // Don't manage focus when touch exploration is disabled.
             return;

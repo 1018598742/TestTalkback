@@ -20,10 +20,12 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v4.view.accessibility.AccessibilityEventCompat;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import com.android.talkback.R;
 import com.android.talkback.controller.FeedbackController;
 import com.android.utils.AccessibilityEventListener;
+import com.android.utils.XLog;
 
 /**
  * Produces continuous vibration feedback during framework gesture recognition.
@@ -49,6 +51,7 @@ public class ProcessorGestureVibrator implements AccessibilityEventListener {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        XLog.itest( "ProcessorGestureVibrator-onAccessibilityEvent: ");
         switch (event.getEventType()) {
             case AccessibilityEventCompat.TYPE_GESTURE_DETECTION_START:
                 mHandler.postDelayed(mFeedbackRunnable, FEEDBACK_DELAY);

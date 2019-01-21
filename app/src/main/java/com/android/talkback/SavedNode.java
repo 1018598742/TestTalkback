@@ -16,6 +16,7 @@
 
 package com.android.talkback;
 
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 
 import android.annotation.TargetApi;
@@ -24,6 +25,7 @@ import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v4.os.BuildCompat;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import com.android.utils.AccessibilityEventListener;
@@ -210,6 +212,7 @@ public class SavedNode implements AccessibilityEventListener {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        XLog.itest( "SavedNode-onAccessibilityEvent: ");
         switch (event.getEventType()) {
             case AccessibilityEvent.TYPE_WINDOWS_CHANGED:
                 clearCache();

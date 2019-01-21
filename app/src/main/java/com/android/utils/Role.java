@@ -16,6 +16,7 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * Utility methods for managing AccessibilityNodeInfo Roles.
+ * 用于管理AccessibilityNodeInfo角色的实用方法。
  */
 public class Role {
     @IntDef({ROLE_NONE, ROLE_BUTTON, ROLE_CHECK_BOX, ROLE_DROP_DOWN_LIST, ROLE_EDIT_TEXT,

@@ -34,6 +34,7 @@ import com.android.talkback.controller.CursorController;
 import com.android.utils.AccessibilityNodeInfoUtils;
 import com.android.utils.Role;
 import com.android.utils.StringBuilderUtils;
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 import com.android.talkback.controller.FullScreenReadController;
 import com.android.utils.AccessibilityEventListener;
@@ -85,6 +86,7 @@ public class ProcessorScrollPosition
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        XLog.itest( "ProcessorScrollPosition-onAccessibilityEvent: ");
         if (shouldIgnoreEvent(event)) {
             return;
         }

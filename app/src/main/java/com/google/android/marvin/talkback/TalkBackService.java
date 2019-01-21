@@ -413,6 +413,7 @@ public class TalkBackService extends AccessibilityService
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);//sevice 方法重写
         if (isServiceActive() && (mOrientationMonitor != null)) {
             mOrientationMonitor.onConfigurationChanged(newConfig);
         }
@@ -423,6 +424,7 @@ public class TalkBackService extends AccessibilityService
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+//        super.onAccessibilityEvent(event);
         mAccessibilityEventProcessor.onAccessibilityEvent(event);
     }
 
@@ -432,6 +434,7 @@ public class TalkBackService extends AccessibilityService
 
     @Override
     public AccessibilityNodeInfo getRootInActiveWindow() {
+//        super.getRootInActiveWindow();//AccessibilityService
         if (mIsRootNodeDirty || mRootNode == null) {
             mRootNode = super.getRootInActiveWindow();
             mIsRootNodeDirty = false;
@@ -456,6 +459,7 @@ public class TalkBackService extends AccessibilityService
 
     @Override
     public AccessibilityNodeInfo findFocus(int focus) {
+//        super.findFocus(focus);//AccessibilityService
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return super.findFocus(focus);
         } else {
@@ -463,6 +467,7 @@ public class TalkBackService extends AccessibilityService
             return root == null ? null : root.findFocus(focus);
         }
     }
+
 
     public void addServiceStateListener(ServiceStateListener listener) {
         if (listener != null) {
@@ -559,6 +564,7 @@ public class TalkBackService extends AccessibilityService
 
     /**
      * Suspends TalkBack and Explore by Touch.
+     * 暂停TalkBack和触摸探索。
      */
     public void suspendTalkBack() {
         if (!isServiceActive()) {
@@ -690,6 +696,7 @@ public class TalkBackService extends AccessibilityService
 
     @Override
     protected boolean onGesture(int gestureId) {
+//        super.onGesture(gestureId);//Accessibility
         if (!isServiceActive()) return false;
 
         if (LogUtils.LOG_LEVEL <= Log.VERBOSE) {
@@ -1132,7 +1139,7 @@ public class TalkBackService extends AccessibilityService
         // Add event processors. These will process incoming AccessibilityEvents
         // in the order they are added.
         ProcessorEventQueue processorEventQueue = new ProcessorEventQueue(mSpeechController, this);
-        processorEventQueue.setTestingListener(mAccessibilityEventProcessor.getTestingListener());
+//        processorEventQueue.setTestingListener(mAccessibilityEventProcessor.getTestingListener());
         mAccessibilityEventProcessor.setProcessorEventQueue(processorEventQueue);
 
         addEventListener(processorEventQueue);
@@ -1790,9 +1797,9 @@ public class TalkBackService extends AccessibilityService
         }
     }
 
-    public void setTestingListener(TalkBackListener testingListener) {
-        mAccessibilityEventProcessor.setTestingListener(testingListener);
-    }
+//    public void setTestingListener(TalkBackListener testingListener) {
+//        mAccessibilityEventProcessor.setTestingListener(testingListener);
+//    }
 
     /**
      * Interface for receiving callbacks when the state of the TalkBack service

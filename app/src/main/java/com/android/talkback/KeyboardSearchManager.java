@@ -32,6 +32,7 @@ import com.android.utils.Const;
 import com.android.utils.FocusFinder;
 import com.android.utils.NodeSearch;
 import com.android.utils.PerformActionUtils;
+import com.android.utils.XLog;
 import com.android.utils.labeling.CustomLabelManager;
 import com.android.utils.traversal.NodeFocusFinder;
 import com.google.android.marvin.talkback.TalkBackService;
@@ -123,6 +124,7 @@ public class KeyboardSearchManager
 
     @Override
     public boolean onKeyEvent(KeyEvent event) {
+        XLog.itest("KeyboardSearchManager-onKeyEvent: ");
         // Only handle single-key events here. The KeyComboManager will pass us combos.
         if (event.getModifiers() != 0 || !mNodeSearch.isActive()) {
             return false;

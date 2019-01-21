@@ -40,6 +40,7 @@ import com.android.talkback.eventprocessor.EventState;
 import com.android.utils.Const;
 import com.android.utils.Role;
 import com.android.utils.StringBuilderUtils;
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 import com.android.talkback.Utterance;
 import com.android.talkback.speechrules.NodeSpeechRuleProcessor;
@@ -184,12 +185,13 @@ public final class TouchExplorationFormatter
         }
 
         LogUtils.log(this, Log.VERBOSE, "Announcing node: %s", focusedNode);
-
+        XLog.itest("TouchExplorationFormatter-format: " + String.format("Announcing node: %s", focusedNode));
         // Transition the collection state if necessary.
         mCollectionState.updateCollectionInformation(focusedNode, event);
 
         // Populate the utterance.
         addEarconWhenAccessibilityFocusMovesToTheDivider(utterance, focusedNode);
+        XLog.itest("TouchExplorationFormatter-format: 这里");
         addSpeechFeedback(utterance, focusedNode, event, sourceNode);
         addAuditoryHapticFeedback(utterance, focusedNode);
 
@@ -326,9 +328,10 @@ public final class TouchExplorationFormatter
                                    AccessibilityEvent event, AccessibilityNodeInfoCompat source) {
         // Ensure that we speak touch exploration, even during speech reco.
         utterance.addSpokenFlag(FeedbackItem.FLAG_DURING_RECO);
-
+        Log.i(TAG, "TouchExplorationFormatter-addDescription: 最佳描述前：");
         final CharSequence treeDescription = mNodeProcessor.getDescriptionForTree(
                 announcedNode, event, source);
+        XLog.itest("TouchExplorationFormatter-addDescription: 最佳描述：" + treeDescription);
         if (!TextUtils.isEmpty(treeDescription)) {
             utterance.addSpoken(treeDescription);
             return true;
@@ -459,6 +462,7 @@ public final class TouchExplorationFormatter
         utterance.addSpokenFlag(FeedbackItem.FLAG_DURING_RECO);
 
         // Add the current node's description.
+        XLog.itest("TouchExplorationFormatter-addSpeechFeedback: 这里");
         addDescription(utterance, announcedNode, event, source);
 
         // Append extra list information, e.g. "2 of 5".

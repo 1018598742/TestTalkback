@@ -30,6 +30,7 @@ import java.util.List;
 
 /**
  * Rule-based processor for adding items to the local breakout menu.
+ * 基于规则的处理器，用于将项添加到本地分组菜单。
  */
 public class NodeMenuRuleProcessor {
     private static final LinkedList<NodeMenuRule> mRules = new LinkedList<>();

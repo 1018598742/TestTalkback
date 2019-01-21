@@ -24,12 +24,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.hardware.SensorManager;
 import android.support.v4.view.accessibility.AccessibilityEventCompat;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.android.talkback.controller.FeedbackController;
 import com.android.talkback.controller.GestureController;
 import com.android.utils.AccessibilityEventListener;
 import com.android.utils.SharedPreferencesUtils;
+import com.android.utils.XLog;
 import com.android.utils.picidae.IntegratedTapDetector;
 import com.google.android.marvin.talkback.TalkBackService;
 
@@ -151,7 +153,9 @@ public class SideTapManager extends BroadcastReceiver
     /**
      * Called so we can avoid detecting screen touches as side taps.
      */
+    @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        XLog.itest( "SideTapManager-onAccessibilityEvent: ");
         if (event.getEventType() == AccessibilityEventCompat.TYPE_TOUCH_INTERACTION_START) {
             mLastTouchTime = System.nanoTime();
         }

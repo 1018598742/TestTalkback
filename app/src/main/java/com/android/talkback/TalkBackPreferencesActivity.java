@@ -358,6 +358,7 @@ public class TalkBackPreferencesActivity extends Activity {
                 return;
             }
 
+            //触摸探索
             Uri uri = Settings.Secure.getUriFor(Settings.Secure.TOUCH_EXPLORATION_ENABLED);
             activity.getContentResolver().registerContentObserver(
                     uri, false, mTouchExploreObserver);

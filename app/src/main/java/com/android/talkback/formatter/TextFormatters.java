@@ -55,6 +55,7 @@ import java.util.List;
 public final class TextFormatters {
     /**
      * Default pitch adjustment for text added event feedback.
+     * 文本添加事件反馈的默认音高调整。
      */
     private static final float DEFAULT_ADD_PITCH = 1.2f;
 

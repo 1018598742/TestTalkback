@@ -82,6 +82,7 @@
             android:launchMode="singleTop"></activity>
 
         <!-- TalkBack -->
+        <!--   辅助功能服务    -->
         <service
             android:name="com.google.android.marvin.talkback.TalkBackService"
             android:directBootAware="true"

@@ -20,6 +20,7 @@ import android.content.res.Resources;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 import com.android.talkback.Utterance;
 import com.android.utils.LogUtils;
@@ -52,7 +53,7 @@ import javax.xml.parsers.ParserConfigurationException;
  * </p>
  */
 public class EventSpeechRuleProcessor {
-    private static final String TAG = "EventSpeechRuleProcesso";
+    private static final String TAG = "My_Test";
 
     /**
      * Indicates the result of filtering and formatting an
@@ -123,6 +124,7 @@ public class EventSpeechRuleProcessor {
                     .get(event.getPackageName());
 
             if ((speechRules != null)) {
+                Log.i(TAG, "EventSpeechRuleProcessor-processEvent: 处理事件");
                 RuleProcessorResult packageResult = processEvent(speechRules, event, utterance);
                 switch (packageResult) {
                     case FORMATTED:
@@ -218,6 +220,7 @@ public class EventSpeechRuleProcessor {
             // We should never crash because of a bug in speech rules.
             try {
                 if (speechRule.applyFilter(event)) {
+                    XLog.itest( "EventSpeechRuleProcessor-processEvent: 这里");
                     if (speechRule.applyFormatter(event, utterance)) {
                         if (LogUtils.LOG_LEVEL <= Log.VERBOSE) {
                             Log.v(TAG, String.format("Processed event using rule: \n%s",

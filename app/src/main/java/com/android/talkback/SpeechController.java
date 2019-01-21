@@ -748,7 +748,7 @@ public class SpeechController implements TalkBackService.KeyEventListener {
         // Clear and post all remaining completion actions.
         clearUtteranceCompletionActions(true);
 
-        // Make sure TTS actually stops talking.
+        // Make sure TTS actually stops talking.确保TTS实际上停止说话。
         mFailoverTts.stopAll();
     }
 

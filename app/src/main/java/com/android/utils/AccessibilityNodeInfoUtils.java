@@ -182,12 +182,14 @@ public class AccessibilityNodeInfoUtils {
         // Prefer content description over text.
         // TODO: Why are we checking the trimmed length?
         final CharSequence contentDescription = node.getContentDescription();
+        XLog.itest( "AccessibilityNodeInfoUtils-getNodeText: contentDescription="+contentDescription);
         if (!TextUtils.isEmpty(contentDescription)
                 && (TextUtils.getTrimmedLength(contentDescription) > 0)) {
             return contentDescription;
         }
 
         final CharSequence text = node.getText();
+        XLog.itest( "AccessibilityNodeInfoUtils-getNodeText: text="+text);
         if (!TextUtils.isEmpty(text)
                 && (TextUtils.getTrimmedLength(text) > 0)) {
             return text;

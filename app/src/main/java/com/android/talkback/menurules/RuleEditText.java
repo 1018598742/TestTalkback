@@ -45,6 +45,7 @@ import java.util.List;
 
 /**
  * Processes editable text fields.
+ * 处理可编辑的文本字段
  */
 class RuleEditText implements NodeMenuRule {
     /**

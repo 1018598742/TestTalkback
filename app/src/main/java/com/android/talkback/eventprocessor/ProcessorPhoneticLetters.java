@@ -40,6 +40,7 @@ import com.android.utils.LogUtils;
 import com.android.utils.SharedPreferencesUtils;
 import com.android.utils.WeakReferenceHandler;
 import com.android.utils.WindowManager;
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,6 +79,7 @@ public class ProcessorPhoneticLetters implements AccessibilityEventListener {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        XLog.itest("ProcessorPhoneticLetters-onAccessibilityEvent: ");
         if (shouldCancelPhoneticLetter(event)) {
             cancelPhoneticLetter();
         }

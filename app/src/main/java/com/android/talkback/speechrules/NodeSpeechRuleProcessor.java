@@ -20,6 +20,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.text.Spannable;
 import android.view.accessibility.AccessibilityNodeInfo;
+
 import com.android.talkback.R;
 
 import android.content.Context;
@@ -28,11 +29,13 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+
 import com.android.utils.AccessibilityNodeInfoUtils;
 import com.android.utils.Const;
 import com.android.utils.LogUtils;
 import com.android.utils.Role;
 import com.android.utils.StringBuilderUtils;
+import com.android.utils.XLog;
 import com.android.utils.traversal.ReorderedChildrenIterator;
 
 import java.util.HashSet;
@@ -41,6 +44,7 @@ import java.util.Set;
 
 /**
  * Rule-based processor for {@link AccessibilityNodeInfoCompat}s.
+ * {@link AccessibilityNodeInfoCompat}的基于规则的处理器。
  */
 public class NodeSpeechRuleProcessor {
 
@@ -83,7 +87,9 @@ public class NodeSpeechRuleProcessor {
         return sInstance;
     }
 
-    /** The parent context. */
+    /**
+     * The parent context.
+     */
     private final Context mContext;
 
     private NodeSpeechRuleProcessor(Context context) {
@@ -95,13 +101,13 @@ public class NodeSpeechRuleProcessor {
      * {@code announcedNode}.
      *
      * @param announcedNode The root node of the subtree to describe.
-     * @param event The source event, may be {@code null} when called with
-     *            non-source nodes.
-     * @param source The event's source node.
+     * @param event         The source event, may be {@code null} when called with
+     *                      non-source nodes.
+     * @param source        The event's source node.
      * @return The best description for a node.
      */
     public CharSequence getDescriptionForTree(AccessibilityNodeInfoCompat announcedNode,
-            AccessibilityEvent event, AccessibilityNodeInfoCompat source) {
+                                              AccessibilityEvent event, AccessibilityNodeInfoCompat source) {
         if (announcedNode == null) {
             return null;
         }
@@ -109,6 +115,7 @@ public class NodeSpeechRuleProcessor {
         final SpannableStringBuilder builder = new SpannableStringBuilder();
 
         Set<AccessibilityNodeInfoCompat> visitedNodes = new HashSet<>();
+        XLog.itest( "NodeSpeechRuleProcessor-getDescriptionForTree: ");
         appendDescriptionForTree(announcedNode, builder, event, source, visitedNodes);
         AccessibilityNodeInfoUtils.recycleNodes(visitedNodes);
         formatTextWithLabel(announcedNode, builder);
@@ -132,7 +139,8 @@ public class NodeSpeechRuleProcessor {
         for (NodeSpeechRule rule : mRules) {
             if ((rule instanceof NodeHintRule) && rule.accept(node, null)) {
                 LogUtils.log(this, Log.VERBOSE, "Processing node hint using %s", rule);
-                return ((NodeHintRule) rule).getHintText(mContext, node);
+                return ((NodeHintRule) rule).getHintText
+                        (mContext, node);
             }
         }
 
@@ -140,8 +148,8 @@ public class NodeSpeechRuleProcessor {
     }
 
     private void appendDescriptionForTree(AccessibilityNodeInfoCompat announcedNode,
-            SpannableStringBuilder builder, AccessibilityEvent event,
-            AccessibilityNodeInfoCompat source, Set<AccessibilityNodeInfoCompat> visitedNodes) {
+                                          SpannableStringBuilder builder, AccessibilityEvent event,
+                                          AccessibilityNodeInfoCompat source, Set<AccessibilityNodeInfoCompat> visitedNodes) {
         if (announcedNode == null) {
             return;
         }
@@ -152,8 +160,10 @@ public class NodeSpeechRuleProcessor {
             return;
         }
 
+        // TODO: 2019/1/21 这里的announcedNode和source比较关键
         final AccessibilityEvent nodeEvent = (announcedNode.equals(source)) ? event : null;
         final CharSequence nodeDesc = getDescriptionForNode(announcedNode, nodeEvent);
+        XLog.itest("NodeSpeechRuleProcessor-appendDescriptionForTree: nodeDesc=" + nodeDesc);
         final boolean blockChildDescription = hasOverridingContentDescription(announcedNode);
 
         SpannableStringBuilder childStringBuilder = new SpannableStringBuilder();
@@ -166,6 +176,7 @@ public class NodeSpeechRuleProcessor {
                 AccessibilityNodeInfoCompat child = iterator.next();
                 if (AccessibilityNodeInfoUtils.isVisible(child)
                         && !AccessibilityNodeInfoUtils.isAccessibilityFocusable(child)) {
+                    Log.i(TAG, "NodeSpeechRuleProcessor-appendDescriptionForTree: 循环获取");
                     appendDescriptionForTree(child, childStringBuilder, event, source,
                             visitedNodes);
                 }
@@ -210,17 +221,17 @@ public class NodeSpeechRuleProcessor {
     /**
      * Processes the specified node using a series of speech rules.
      *
-     * @param node The node to process.
+     * @param node  The node to process.
      * @param event The source event, may be {@code null} when called with
-     *            non-source nodes.
+     *              non-source nodes.
      * @return A string representing the given node, or {@code null} if the node
-     *         could not be processed.
+     * could not be processed.
      */
     public CharSequence getDescriptionForNode(
             AccessibilityNodeInfoCompat node, AccessibilityEvent event) {
         for (NodeSpeechRule rule : mRules) {
             if (rule.accept(node, event)) {
-                Log.i(TAG, "NodeSpeechRuleProcessor-getDescriptionForNode: "+String.format("Processing node using %s", rule));
+                Log.i(TAG, "NodeSpeechRuleProcessor-getDescriptionForNode: " + String.format("Processing node using %s", rule));
                 LogUtils.log(this, Log.VERBOSE, "Processing node using %s", rule);
                 return rule.format(mContext, node, event);
             }
@@ -247,6 +258,7 @@ public class NodeSpeechRuleProcessor {
 
         final SpannableStringBuilder labelDescription = new SpannableStringBuilder();
         Set<AccessibilityNodeInfoCompat> visitedNodes = new HashSet<>();
+        XLog.itest("NodeSpeechRuleProcessor-formatTextWithLabel: ");
         appendDescriptionForTree(labelNode, labelDescription, null, null, visitedNodes);
         AccessibilityNodeInfoUtils.recycleNodes(visitedNodes);
         if (TextUtils.isEmpty(labelDescription)) {

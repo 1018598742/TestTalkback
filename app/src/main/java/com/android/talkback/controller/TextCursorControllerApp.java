@@ -17,8 +17,11 @@
 package com.android.talkback.controller;
 
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+
+import com.android.utils.XLog;
 
 public class TextCursorControllerApp implements TextCursorController {
 
@@ -28,6 +31,8 @@ public class TextCursorControllerApp implements TextCursorController {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        XLog.itest("TextCursorControllerApp-onAccessibilityEvent: ");
+        //表示更改{@link android.widget.EditText}中的选择的事件。
         if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED) {
             processTextSelectionChange(event);
         }

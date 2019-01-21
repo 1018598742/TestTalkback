@@ -39,6 +39,7 @@ import com.android.utils.WeakReferenceHandler;
 /**
  * Manages accessibility hints. When a node is accessibility-focused and hints are enabled,
  * the hint will be queued after a short delay.
+ * 管理辅助功能提示。当节点以可访问性为重点并启用提示时，*提示将在短暂延迟后排队。
  */
 public class ProcessorAccessibilityHints implements AccessibilityEventListener {
     private final SharedPreferences mPrefs;

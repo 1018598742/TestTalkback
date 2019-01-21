@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import com.android.talkback.R;
 import com.android.talkback.SpeechController;
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 import com.android.talkback.controller.FullScreenReadController;
 import com.android.utils.AccessibilityEventListener;
@@ -58,7 +59,7 @@ public class ProcessorWebContent implements AccessibilityEventListener {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.i(TAG, "ProcessorWebContent-onAccessibilityEvent: ");
+        XLog.itest( "ProcessorWebContent-onAccessibilityEvent: ");
         // Only announce relevant events
         if (!AccessibilityEventUtils.eventMatchesAnyType(event, MASK_ACCEPTED_EVENT_TYPES)) {
             return;

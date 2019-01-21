@@ -27,6 +27,7 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.support.annotation.NonNull;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -37,6 +38,7 @@ import com.android.talkback.R;
 import com.android.talkback.SpeechController;
 import com.android.utils.Role;
 import com.android.utils.WeakReferenceHandler;
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 import com.android.talkback.controller.CursorController;
 import com.android.talkback.controller.DimScreenController;
@@ -135,6 +137,7 @@ public class ProcessorVolumeStream implements AccessibilityEventListener,
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        XLog.itest("ProcessorVolumeStream-onAccessibilityEvent: ");
         switch (event.getEventType()) {
             case AccessibilityEvent.TYPE_TOUCH_INTERACTION_START:
                 mTouchingScreen = true;

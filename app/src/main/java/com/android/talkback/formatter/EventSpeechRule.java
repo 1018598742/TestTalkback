@@ -31,6 +31,7 @@ import android.view.accessibility.AccessibilityEvent;
 import com.android.talkback.FeedbackItem;
 import com.android.talkback.R;
 
+import com.android.utils.XLog;
 import com.google.android.marvin.talkback.TalkBackService;
 import com.android.talkback.Utterance;
 import com.android.talkback.speechrules.NodeSpeechRuleProcessor;
@@ -40,6 +41,7 @@ import com.android.utils.ClassLoadingCache;
 import com.android.utils.LogUtils;
 import com.android.utils.NodeUtils;
 import com.android.utils.PackageManagerUtils;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -116,14 +118,21 @@ public class EventSpeechRule {
      */
     private static final String UNDEFINED_PACKAGE_NAME = "undefined_package_name";
 
-    /** Regular expression pattern for resource identifiers. */
+    /**
+     * Regular expression pattern for resource identifiers.
+     */
     private static final Pattern mResourceIdentifier = Pattern.compile("@([\\w\\.]+:)?\\w+/\\w+");
 
-    /** Reusable builder to avoid object creation. */
+    /**
+     * Reusable builder to avoid object creation.
+     */
     private static final SpannableStringBuilder sTempBuilder = new SpannableStringBuilder();
 
-    /** Mapping from event type name to its type. */
+    /**
+     * Mapping from event type name to its type.
+     */
     private static final HashMap<String, Integer> sEventTypeNameToValueMap = new HashMap<>();
+
     static {
         sEventTypeNameToValueMap.put("TYPE_VIEW_CLICKED", AccessibilityEvent.TYPE_VIEW_CLICKED);
         sEventTypeNameToValueMap.put("TYPE_VIEW_LONG_CLICKED",
@@ -172,6 +181,7 @@ public class EventSpeechRule {
      * Mapping from queue mode names to queue modes.
      */
     private static final HashMap<String, Integer> sQueueModeNameToQueueModeMap = new HashMap<>();
+
     static {
         sQueueModeNameToQueueModeMap.put("INTERRUPT", 0);
         sQueueModeNameToQueueModeMap.put("QUEUE", 1);
@@ -213,22 +223,34 @@ public class EventSpeechRule {
      */
     private final List<Integer> mCustomVibrations = new LinkedList<>();
 
-    /** Mapping from property name to property matcher. */
+    /**
+     * Mapping from property name to property matcher.
+     */
     private final LinkedHashMap<String, PropertyMatcher> mPropertyMatchers = new LinkedHashMap<>();
 
-    /** Filter for matching an event. */
+    /**
+     * Filter for matching an event.
+     */
     private final AccessibilityEventFilter mFilter;
 
-    /** Formatter for building an utterance. */
+    /**
+     * Formatter for building an utterance.
+     */
     private final AccessibilityEventFormatter mFormatter;
 
-    /** The index of this rule within the global rule list. */
+    /**
+     * The index of this rule within the global rule list.
+     */
     private final int mRuleIndex;
 
-    /** The context in which this speech rule operates. */
+    /**
+     * The context in which this speech rule operates.
+     */
     private final TalkBackService mContext;
 
-    /** The package targeted by this rule. */
+    /**
+     * The package targeted by this rule.
+     */
     private String mPackageName = UNDEFINED_PACKAGE_NAME;
 
     /**
@@ -237,7 +259,9 @@ public class EventSpeechRule {
      */
     private Node mNode;
 
-    /** Lazily populated XML representation of this node. */
+    /**
+     * Lazily populated XML representation of this node.
+     */
     private String mCachedXmlString;
 
     /**
@@ -250,7 +274,7 @@ public class EventSpeechRule {
      * and a <code>ruleIndex</code> is assigned to the rule.
      *
      * @throws IllegalStateException If the tries to load custom
-     *             filter/formatter while <code>customInstancesSupported</code> is false;
+     *                               filter/formatter while <code>customInstancesSupported</code> is false;
      */
     private EventSpeechRule(TalkBackService context, Node node, int ruleIndex) {
         mContext = context;
@@ -334,7 +358,7 @@ public class EventSpeechRule {
      *
      * @param event The event to which this rule's filter will be applied.
      * @return {@code true} if the event was accepted by the filter,
-     *         {@code false} otherwise.
+     * {@code false} otherwise.
      */
     public boolean applyFilter(AccessibilityEvent event) {
         // Rules without a filter will match all events.
@@ -345,14 +369,15 @@ public class EventSpeechRule {
      * Uses this rule's {@link AccessibilityEventFormatter} to populate a
      * formatted {@link Utterance} based on an {@link AccessibilityEvent}
      *
-     * @param event The event to be used by this rule's
-     *            {@link AccessibilityEventFormatter}
+     * @param event     The event to be used by this rule's
+     *                  {@link AccessibilityEventFormatter}
      * @param utterance The utterance to format
      * @return {@code true} if the formatter successfully populated the
-     *         utterance, {@code false} otherwise
+     * utterance, {@code false} otherwise
      */
     public boolean applyFormatter(AccessibilityEvent event, Utterance utterance) {
         // No formatter indicates there is no utterance text.
+        XLog.itest( "EventSpeechRule-applyFormatter: 这里");
         if ((mFormatter != null) && !mFormatter.format(event, mContext, utterance)) {
             return false;
         }
@@ -427,7 +452,7 @@ public class EventSpeechRule {
      * Parses a property according to its expected type. Parsing failures are
      * logged and null is returned.
      *
-     * @param name The property name.
+     * @param name  The property name.
      * @param value The property value.
      * @return The parsed value or null if parse error occurs.
      */
@@ -628,12 +653,12 @@ public class EventSpeechRule {
      * of a speechstrategy.xml. This class does not verify if the <code>document</code>
      * is well-formed and it is responsibility of the client to do that.
      *
-     * @param context A {@link Context} instance for loading resources.
+     * @param context  A {@link Context} instance for loading resources.
      * @param document The parsed XML.
      * @return The list of loaded speech rules.
      */
     public static ArrayList<EventSpeechRule> createSpeechRules(TalkBackService context,
-            Document document) throws IllegalStateException {
+                                                               Document document) throws IllegalStateException {
         final ArrayList<EventSpeechRule> speechRules = new ArrayList<>();
 
         if (document == null || context == null) {
@@ -690,7 +715,7 @@ public class EventSpeechRule {
      * @param context The parent context.
      * @param resName A valid resource name.
      * @return A resource identifier, or {@code -1} if the resource name is
-     *         invalid.
+     * invalid.
      */
     private static int getResourceIdentifierContent(Context context, String resName) {
         if (resName == null) {
@@ -735,7 +760,7 @@ public class EventSpeechRule {
      * Performs a recursive preorder traversal of a DOM tree and aggregating the
      * text content.
      *
-     * @param node The currently explored node.
+     * @param node    The currently explored node.
      * @param builder Builder that aggregates the text content.
      */
     private static void getTextContentRecursive(Node node, SpannableStringBuilder builder) {
@@ -825,7 +850,7 @@ public class EventSpeechRule {
         }
 
         private boolean evaluatePropertyForEvent(Context context, PropertyMatcher matcher,
-                AccessibilityEvent event) {
+                                                 AccessibilityEvent event) {
             return matcher.accept(getPropertyValue(context, matcher.mPropertyName, event));
         }
     }
@@ -834,7 +859,7 @@ public class EventSpeechRule {
      * Returns the value of a given <code>property</code> of an <code>event</code>.
      *
      * @param property The property
-     * @param event The event.
+     * @param event    The event.
      * @return the value.
      */
     private Object getPropertyValue(Context context, String property, AccessibilityEvent event) {
@@ -925,6 +950,7 @@ public class EventSpeechRule {
                 final NodeSpeechRuleProcessor nodeProcessor = NodeSpeechRuleProcessor.getInstance();
                 final CharSequence treeDescription = nodeProcessor.getDescriptionForTree(
                         source, event, source);
+                XLog.itest("EventSpeechRule-getNodeDescriptionOrFallback: 最佳描述：" + treeDescription);
                 if (!TextUtils.isEmpty(treeDescription)) {
                     return treeDescription;
                 }
@@ -959,9 +985,9 @@ public class EventSpeechRule {
 
         private static final int MASK_EVENT_TYPES_SPEAK_STATE =
                 AccessibilityEventCompat.TYPE_VIEW_ACCESSIBILITY_FOCUSED
-                | AccessibilityEventCompat.TYPE_VIEW_HOVER_ENTER
-                | AccessibilityEvent.TYPE_VIEW_FOCUSED
-                | AccessibilityEvent.TYPE_VIEW_SELECTED;
+                        | AccessibilityEventCompat.TYPE_VIEW_HOVER_ENTER
+                        | AccessibilityEvent.TYPE_VIEW_FOCUSED
+                        | AccessibilityEvent.TYPE_VIEW_SELECTED;
 
         /**
          * Optional XML Node representing the formatter template to use.
@@ -1022,7 +1048,7 @@ public class EventSpeechRule {
 
         @Override
         public boolean format(AccessibilityEvent event, TalkBackService context,
-                Utterance utterance) {
+                              Utterance utterance) {
             final List<Pair<String, String>> selectors = mSelectors;
             final Object[] arguments = new Object[selectors.size()];
 
@@ -1066,12 +1092,12 @@ public class EventSpeechRule {
          * with the generated text.
          *
          * @param utterance The builder to which to append the utterance.
-         * @param quantity The quantity to apply if using a plural template or
-         *            {@code Integer.MIN_VALUE} for non-plural templates.
+         * @param quantity  The quantity to apply if using a plural template or
+         *                  {@code Integer.MIN_VALUE} for non-plural templates.
          * @param arguments The formatting arguments.
          */
         private void formatTemplateOrAppendSpaceSeparatedValueIfNoTemplate(Utterance utterance,
-                int quantity, Object[] arguments) {
+                                                                           int quantity, Object[] arguments) {
             if (mTemplateNode != null) {
                 final int templateRes = getResourceIdentifierContent(mContext,
                         getTextContent(mTemplateNode));
@@ -1103,9 +1129,9 @@ public class EventSpeechRule {
                     }
                 } catch (MissingFormatArgumentException mfae) {
                     LogUtils.log(DefaultFormatter.class, Log.ERROR, "Speech rule: '%d' has "
-                            + "inconsistency between template: '%s' and arguments: '%s'. "
-                            + "Possibliy #template arguments does not "
-                            + "match #parameters. %s", mRuleIndex, getTextContent(mTemplateNode),
+                                    + "inconsistency between template: '%s' and arguments: '%s'. "
+                                    + "Possibliy #template arguments does not "
+                                    + "match #parameters. %s", mRuleIndex, getTextContent(mTemplateNode),
                             arguments, mfae.toString());
                 }
             } else {
@@ -1269,7 +1295,9 @@ public class EventSpeechRule {
          */
         private final String mPropertyName;
 
-        /** The type of property matched by this instance. */
+        /**
+         * The type of property matched by this instance.
+         */
         private final int mPropertyType;
 
         /**
@@ -1290,12 +1318,12 @@ public class EventSpeechRule {
         /**
          * Creates a new instance.
          *
-         * @param context The Context for accessing resources.
-         * @param propertyName The name of the matched property.
+         * @param context       The Context for accessing resources.
+         * @param propertyName  The name of the matched property.
          * @param acceptedValue The not parsed accepted value.
          */
         public PropertyMatcher(Context context, String propertyName, String acceptedValue,
-                NamedNodeMap attributes) {
+                               NamedNodeMap attributes) {
             mContext = context;
             mPropertyName = propertyName;
             mPropertyType = getPropertyType(propertyName);
@@ -1314,7 +1342,7 @@ public class EventSpeechRule {
                 mType = TYPE_LESS_THAN_OR_EQUAL;
                 final int fromIndex = acceptedValue.indexOf(LESS_THAN_OR_EQUAL);
                 final String valueString = acceptedValue.substring(fromIndex + 2).trim();
-                mAcceptedValues = new Object[] {
+                mAcceptedValues = new Object[]{
                         parsePropertyValue(propertyName, valueString)
                 };
             } else if (isNumericPropertyType
@@ -1322,7 +1350,7 @@ public class EventSpeechRule {
                 mType = TYPE_GREATER_THAN_OR_EQUAL;
                 final int fromIndex = acceptedValue.indexOf(GREATER_THAN_OR_EQUAL);
                 final String valueString = acceptedValue.substring(fromIndex + 2).trim();
-                mAcceptedValues = new Object[] {
+                mAcceptedValues = new Object[]{
                         parsePropertyValue(propertyName, valueString)
                 };
             } else if (isNumericPropertyType
@@ -1330,7 +1358,7 @@ public class EventSpeechRule {
                 mType = TYPE_LESS_THAN;
                 final int fromIndex = acceptedValue.indexOf(LESS_THAN);
                 final String valueString = acceptedValue.substring(fromIndex + 1).trim();
-                mAcceptedValues = new Object[] {
+                mAcceptedValues = new Object[]{
                         parsePropertyValue(propertyName, valueString)
                 };
             } else if (isNumericPropertyType
@@ -1338,15 +1366,15 @@ public class EventSpeechRule {
                 mType = TYPE_GREATER_THAN;
                 final int fromIndex = acceptedValue.indexOf(GREATER_THAN);
                 final String valueString = acceptedValue.substring(fromIndex + 1).trim();
-                mAcceptedValues = new Object[] {
+                mAcceptedValues = new Object[]{
                         parsePropertyValue(propertyName, valueString)
                 };
             } else if (REQUIRE_EMPTY.equals(getAttribute(attributes, ATTRIBUTE_REQUIRE))) {
                 mType = TYPE_REQUIRE_EMPTY;
-                mAcceptedValues = new Object[] {};
+                mAcceptedValues = new Object[]{};
             } else if (REQUIRE_NON_EMPTY.equals(getAttribute(attributes, ATTRIBUTE_REQUIRE))) {
                 mType = TYPE_REQUIRE_NON_EMPTY;
-                mAcceptedValues = new Object[] {};
+                mAcceptedValues = new Object[]{};
             } else if (PATTERN_OR.matcher(acceptedValue).matches()) {
                 mType = TYPE_OR;
                 final String[] acceptedValues = PATTERN_SPLIT_OR.split(acceptedValue);
@@ -1356,7 +1384,7 @@ public class EventSpeechRule {
                 }
             } else {
                 mType = TYPE_EQUALS;
-                mAcceptedValues = new Object[] {
+                mAcceptedValues = new Object[]{
                         parsePropertyValue(propertyName, acceptedValue)
                 };
             }
@@ -1364,7 +1392,7 @@ public class EventSpeechRule {
 
         /**
          * @return True if the given <code>value</code> with specified <code>arguments</code>
-         *         is accepted by this matcher.
+         * is accepted by this matcher.
          */
         public boolean accept(Object value) {
             if (mAcceptedValues == null) {
@@ -1392,8 +1420,8 @@ public class EventSpeechRule {
 
         /**
          * @return True if this matcher accepts a <code>className</code> from the given
-         *         <code>packageName</code> while comparing it against the filtered event
-         *         (#PROPERTY_CLASS_NAME) from the <code>filteredPackageName</code>.
+         * <code>packageName</code> while comparing it against the filtered event
+         * (#PROPERTY_CLASS_NAME) from the <code>filteredPackageName</code>.
          */
         private boolean acceptClassNameProperty(String eventClassName, boolean requireExactMatch) {
 
@@ -1421,7 +1449,7 @@ public class EventSpeechRule {
 
         /**
          * @return True if this matcher accepts the given <code>value</code> for the
-         *         property it matches.
+         * property it matches.
          */
         private boolean acceptProperty(Object value) {
             // Convert CharSequences to Strings.
@@ -1488,7 +1516,7 @@ public class EventSpeechRule {
         /**
          * Check if the filter accepts a given <code>event</code>.
          *
-         * @param event The event.
+         * @param event   The event.
          * @param context The context to be used for loading resources etc.
          * @return True if the event is accepted, false otherwise.
          */
@@ -1504,13 +1532,13 @@ public class EventSpeechRule {
         /**
          * Formats an <code>utterance</code> form given <code>event</code>.
          *
-         * @param event The event.
-         * @param context The context to be used for loading resources etc.
+         * @param event     The event.
+         * @param context   The context to be used for loading resources etc.
          * @param utterance The utterance instance to populate.
          * @return {@code true} if the formatter produced output. Accepting an
-         *         event in an {@link AccessibilityEventFilter} and returning
-         *         {@code false} from an {@link AccessibilityEventFormatter}
-         *         will cause the event to be dropped entirely.
+         * event in an {@link AccessibilityEventFilter} and returning
+         * {@code false} from an {@link AccessibilityEventFormatter}
+         * will cause the event to be dropped entirely.
          */
         public boolean format(AccessibilityEvent event, TalkBackService context,
                               Utterance utterance);

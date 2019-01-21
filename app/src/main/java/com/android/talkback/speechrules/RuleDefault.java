@@ -19,12 +19,14 @@ package com.android.talkback.speechrules;
 import android.content.Context;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.android.talkback.R;
 import com.android.utils.AccessibilityNodeInfoUtils;
 import com.android.utils.Role;
 import com.android.utils.StringBuilderUtils;
+import com.android.utils.XLog;
 
 /**
  * Default node processing rule. Returns a content description if available,
@@ -41,10 +43,11 @@ class RuleDefault implements NodeSpeechRule, NodeHintRule {
         SpannableStringBuilder output = new SpannableStringBuilder();
 
         final CharSequence nodeText = AccessibilityNodeInfoUtils.getNodeText(node);
+        XLog.itest("RuleDefault-format: nodeText=" + nodeText);
         final CharSequence roleText = Role.getRoleDescriptionOrDefault(context, node);
-
+        XLog.itest("RuleDefault-format: roleText=" + roleText);
         StringBuilderUtils.append(output, nodeText, roleText);
-
+        XLog.itest("RuleDefault-format: output=" + output);
         return output;
     }
 

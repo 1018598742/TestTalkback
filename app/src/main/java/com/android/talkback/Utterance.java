@@ -28,6 +28,7 @@ import java.util.Set;
 /**
  * This class represents an utterance composed of text to be spoken and meta
  * data about how this text to be spoken.
+ * 该类表示由要说出的文本和关于如何说出该文本的元*数据组成的话语。
  */
 public class Utterance {
 
